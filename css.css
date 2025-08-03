@@ -1,0 +1,229 @@
+/* 页面整体居中 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #f0f0f0;
+}
+
+/* 主容器垂直排列 */
+#box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    padding: 24px;
+    gap: 24px;
+}
+
+/* 按钮区域横向排列 */
+#buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 16px;
+    background: #eaeaea;
+    border-radius: 12px;
+    padding: 8px 0;
+}
+
+/* 按钮样式 */
+#buttons button {
+    width: 80px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background: #7ce9cc;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#buttons button:hover {
+    background: #ffe066;
+}
+
+/* 剩余雷数显示 */
+#mineleft {
+    width: 80px;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    border-radius: 8px;
+    margin-left: 8px;
+}
+
+/* 棋盘区域 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    gap: 0;
+    width: auto;
+    height: auto;
+    max-width: 100vw;
+    max-height: 70vh;
+    margin-bottom: 0;
+}
+
+/* 格子样式 */
+.grid div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #02284b;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    font-size: 2rem;
+    color: #fff;
+    transition: background 0.2s;
+}
+.grid div.open {
+    background: #eee;
+    color: #222;
+}
+
+/* 宽高比小于等于1（竖屏/窄屏）：按钮在右侧，棋盘自适应 */
+@media (max-aspect-ratio: 1/1) {
+    #box {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 2vw;
+        padding: 2vw;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(10, 8vw);
+        grid-template-rows: repeat(10, 8vw);
+        /* 不设置width/height，自动撑开 */
+        min-width: 0;
+        min-height: 0;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        overflow-x: auto;
+        overflow-y: hidden;
+        background: #fff;
+    }
+    .grid div {
+        width: 8vw;
+        height: 8vw;
+        font-size: 3vw;
+        border-radius: 2px;
+        padding: 0;
+    }
+    #buttons {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 2vw;
+        margin-bottom: 0;
+        margin-left: 2vw;
+        background: #eaeaea;
+        border-radius: 6px;
+        padding: 2vw 0;
+        min-width: 20vw;
+        max-width: 28vw;
+        box-sizing: border-box;
+    }
+    #buttons button, #mineleft {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        font-size: 3.5vw;
+        height: 8vw;
+        margin: 0;
+        box-sizing: border-box;
+    }
+}
+
+/* 宽高比大于1（横屏/宽屏）：按钮在上方，棋盘在下方，按钮横排 */
+@media (min-aspect-ratio: 1/1) {
+    #box {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        padding: 24px;
+        width: auto;
+    }
+    #buttons {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        width: 100%;
+        margin-bottom: 16px;
+        margin-left: 0;
+        background: #eaeaea;
+        border-radius: 12px;
+        padding: 8px 0;
+        min-width: 0;
+        max-width: none;
+    }
+    #buttons button, #mineleft {
+        width: 80px;
+        height: 40px;
+        font-size: 18px;
+        margin: 0 8px;
+        min-width: 0;
+        max-width: none;
+    }
+    .grid {
+        grid-template-columns: repeat(10, 40px);
+        grid-template-rows: repeat(10, 40px);
+        width: 400px;
+        height: 400px;
+        max-width: 90vw;
+        max-height: 70vh;
+        border-radius: 12px;
+        margin-bottom: 0;
+    }
+    .grid div {
+        width: 40px;
+        height: 40px;
+        font-size: 2rem;
+    }
+}
+
+/* 竖屏时只显示提示，隐藏主内容 */
+@media (orientation: portrait) {
+    #box {
+        display: none !important;
+    }
+    #rotate-tip {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        font-size: 2rem;
+        color: #fff;
+        background: #222;
+        position: fixed;
+        top: 0; left: 0;
+        z-index: 9999;
+    }
+}
+@media (orientation: landscape) {
+    #rotate-tip {
+        display: none !important;
+    }
+}
+
